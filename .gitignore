@@ -1,0 +1,29 @@
+# Python
+*.pyc
+__pycache__/
+
+# Odoo
+*.log
+*.pot
+*.po
+
+# Virtual env
+venv/
+odoovenv/
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
