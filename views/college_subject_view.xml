@@ -1,0 +1,50 @@
+<odoo>
+    <data>
+        <record id="view_college_subject_form" model="ir.ui.view">
+            <field name="name">college.subject.form</field>
+            <field name="model">college.subject</field>
+            <field name="arch" type="xml">
+                <form string="Subject">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Subject Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="credit"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Departments" name="departments">
+                                <field name="department_ids" widget="many2many_tags"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <record id="view_college_subject_tree" model="ir.ui.view">
+        <field name="name">college.subject.list</field>
+        <field name="model">college.subject</field>
+        <field name="arch" type="xml">
+            <list string="Subjects">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="credit"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="action_college_subject" model="ir.actions.act_window">
+        <field name="name">Subjects</field>
+        <field name="res_model">college.subject</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    </data>
+</odoo>
