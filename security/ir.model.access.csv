@@ -3,4 +3,6 @@ access_college_student,access.college.student,model_college_student,base.group_u
 access_college_subject,access.college.subject,model_college_subject,base.group_user,1,1,1,1
 access_college_department,access.college.department,model_college_department,base.group_user,1,1,1,1
 access_college_student_subject_mark,access.college.student.subject.mark,model_college_student_subject_mark,base.group_user,1,1,1,1
+access_student_marks_wizard,access.student.marks.wizard,model_student_marks_wizard,base.group_user,1,1,1,1
+access_student_marks_wizard_line,access.student.marks.wizard.line,model_student_marks_wizard_line,base.group_user,1,1,1,1
 

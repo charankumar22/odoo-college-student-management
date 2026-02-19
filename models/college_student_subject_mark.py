@@ -57,3 +57,9 @@ class collegestudentsubjectmark(models.Model):
                 raise ValidationError(f"Internal Marks must be between 0 to 30. You entered: {rec.internal_mark}") 
             if rec.external_mark < 0 or rec.external_mark > 70:
                 raise ValidationError(f"External Marks must be between 0 to 70. You entered: {rec.external_mark}") 
+            
+    def action_delete_mark(self):
+        for rec in self:
+            if rec.student_id.state != 'draft':
+                raise ValidationError("You can only delete marks in draft state.")
+        self.unlink()

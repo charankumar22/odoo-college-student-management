@@ -59,11 +59,11 @@ class collegestudent(models.Model):
         return {
             'name': 'Edit Subject Marks',
             'type': 'ir.actions.act_window',
-            'res_model': 'college.student.subject.mark',
-            'view_mode': 'list',
-            'views': [(False, 'list')],
+            'res_model': 'student.marks.wizard',
+            'view_mode': 'form',
+            'views': [(False, 'form')],
             'target': 'new',
-            'domain': [('student_id', '=', self.id)],
+            # 'domain': [('student_id', '=', self.id)],
             'context': {
                 'default_student_id': self.id,
                 'create': True,

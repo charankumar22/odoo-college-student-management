@@ -8,7 +8,7 @@
                     <header>
                         <button name='action_confirm' string='Confirm' type='object' class='oe_highlight' invisible='state != "draft"' />
                         <button name='action_reset' string='Reset' type='object' invisible='state != "confirmed"' />
-                        <button name="action_open_marks_wizard" string="Add Marks" type="object" class="oe_highlight" context="{'default_student_id':id}"/>
+                        <button name="action_open_marks_wizard" string="Add Marks" type="object" class="oe_highlight"/>                        
                         <field name='state' widget='statusbar' statusbar_visible='draft,confirmed' />
 
 
@@ -36,15 +36,21 @@
                         </group>
                         <notebook>
 
-                            <page string='Subject Marks' name='subject marks'>
-                                <field name='subject_mark_ids' readonly="state == 'confirmed'">
-                                    <list editable='bottom' create='false'>
+                            <page string='Subject Marks' name='subject marks' >
+                                <field name='subject_mark_ids' readonly="1">
+                                    <list editable='bottom' create='false' delete="state=='draft'">
                                         <field name='subject_id' readonly='1'/>
                                         <field name='credit' readonly='1' />
                                         <field name='internal_mark'  readonly='1'/>
                                         <field name='external_mark' readonly='1'/>
                                         <field name='total_mark' readonly='1'/>
                                         <field name='grade_point' readonly='1'/>
+                                        <button name="action_delete_mark" 
+                                                type="object" 
+                                                icon="fa-trash" 
+                                                string=""
+                                                Confirm="Are you sure you want to delete this mark?" 
+                                                class="btn-link text-danger" width="1" />
                                     </list>
                                 </field>
                                 <group class="oe_subtotal_footer oe_right">
