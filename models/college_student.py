@@ -1,4 +1,5 @@
 from odoo import fields,models,api
+from odoo.exceptions import ValidationError
 
 class collegestudent(models.Model):
     _name = 'college.student'
@@ -18,6 +19,28 @@ class collegestudent(models.Model):
 
     cgpa = fields.Float(string='CGPA',compute='_compute_cgpa',store=True,tracking=True)
 
+    cgpa_status = fields.Char(
+        string='CGPA Status',
+        compute='_compute_cgpa_status',
+    )
+
+    @api.depends('cgpa')
+    @api.depends_context('show_cgpa_warning')
+    def _compute_cgpa_status(self):
+        show_warning = self.env.context.get('show_cgpa_warning', False)
+        for student in self:
+            if student.cgpa >= 8.0:
+                student.cgpa_status = (
+                    '⭐ Distinction ' if show_warning else '⭐ Distinction'
+                )
+            elif student.cgpa >= 6.0:
+                student.cgpa_status = '✅ Pass'
+            else:
+                student.cgpa_status = (
+                    '⚠️ Below Average – Needs Attention' if show_warning else '❌ Below Average'
+                )
+    
+
     @api.depends('subject_mark_ids.total_mark')
     def _compute_total_marks(self):
         for student in self:
@@ -33,6 +56,14 @@ class collegestudent(models.Model):
                 student.cgpa = weighted_sum / total_credit
             else:
                 student.cgpa = 0.0
+
+    @api.returns('college.student')
+    def get_confirmed_students(self):
+        return self.filtered(lambda s: s.state == 'confirmed')
+    
+    @api.returns('college.student', lambda value: value.ids)
+    def get_toppers(self):
+        return self.filtered(lambda s: s.cgpa >= 8.0)
 
     @api.onchange('department_id','semester')
     def _onchange_department_semester(self):
@@ -70,4 +101,4 @@ class collegestudent(models.Model):
                 'edit': True,
                 'delete': True,
             },
-        }
+        } 

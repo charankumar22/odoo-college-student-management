@@ -63,3 +63,15 @@ class collegestudentsubjectmark(models.Model):
             if rec.student_id.state != 'draft':
                 raise ValidationError("You can only delete marks in draft state.")
         self.unlink()
+
+    @api.autovacuum
+    def _autovacuum_draft_zero_marks(self):
+        cutoff = fields.Datetime.subtract(fields.Datetime.now(), days=7)
+        stale_lines = self.search([
+            ('student_id.state', '=', 'draft'),
+            ('internal_mark', '=', 0.0),
+            ('external_mark', '=', 0.0),
+            ('create_date', '<', cutoff),
+        ])
+        if stale_lines:
+            stale_lines.unlink()
